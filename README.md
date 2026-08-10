@@ -40,15 +40,15 @@ This project demonstrates how to provision and manage **Development, Staging, an
 
 ## ✨ Core Components
 
-| Layer                 | Services                                    |
-| --------------------- | ------------------------------------------- |
-| 🌐 Networking         | VNet, Subnets, NSGs, Private Endpoints      |
-| ⚖️ Traffic Management | Application Gateway, Internal Load Balancer |
-| 💻 Compute            | Frontend & Backend Virtual Machines         |
-| 🔐 Security           | Azure Bastion, Key Vault                    |
-| 🗄️ Database          | Azure SQL Server & Database                 |
-| 📊 Monitoring         | Azure Monitor, Log Analytics                |
-| 🚀 Automation         | Terraform + Azure DevOps                    |
+| Layer                 | Services                                                  |
+| --------------------- | --------------------------------------------------------- |
+| 🌐 Networking         | VNet, Subnets, NSGs, Azure NAT Gateway, Private Endpoints |
+| ⚖️ Traffic Management | Application Gateway, Internal Load Balancer               |
+| 💻 Compute            | Frontend & Backend Virtual Machines                       |
+| 🔐 Security           | Azure Bastion, Key Vault                                  |
+| 🗄️ Database          | Azure SQL Server & Database                               |
+| 📊 Monitoring         | Azure Monitor, Log Analytics                              |
+| 🚀 Automation         | Terraform + Azure DevOps                                  |
 
 ---
 
@@ -61,7 +61,7 @@ Development
 ├── Rapid Testing
 └── Frequent Deployments
 
-Staging
+QA / Staging
 │
 ├── Production-like Environment
 ├── Validation & UAT
@@ -81,7 +81,7 @@ Production
 ```mermaid
 flowchart LR
 
-A[GitHub Push]
+A[GitHub / Azure Repos Push]
 --> B[Terraform Validate]
 
 B --> C[Security Scan]
@@ -90,7 +90,7 @@ C --> D[Terraform Plan]
 
 D --> E[Dev Deployment]
 
-E --> F[Staging Deployment]
+E --> F[QA Deployment]
 
 F --> G[Manual Approval]
 
@@ -99,11 +99,11 @@ G --> H[Production Deployment]
 
 ### Pipeline Features
 
-* Terraform Validation
-* Security Scanning (Checkov / tfsec)
-* Automated Dev & Staging Deployment
-* Production Approval Gates
-* Infrastructure Drift Detection
+* Terraform Validation & Formatting Check
+* Security Scanning (tfsec)
+* Automated Dev & QA Deployment
+* Production Governance & Approval Gates
+* Remote State Backend Management
 
 ---
 
@@ -111,20 +111,26 @@ G --> H[Production Deployment]
 
 ```text
 .
-├── .github/
-│   └── workflows/
-│
-├── modules/
-│   ├── networking/
-│   ├── compute/
-│   ├── database/
-│   └── security/
-│
-├── environments/
+├── Environment/
 │   ├── dev/
-│   ├── staging/
+│   ├── qa/
 │   └── prod/
-│
+├── Module/
+│   ├── azurerm_application_gateway/
+│   ├── azurerm_bastion/
+│   ├── azurerm_database/
+│   ├── azurerm_internal_loadbalancer/
+│   ├── azurerm_nat_gateway/
+│   ├── azurerm_niclb_association/
+│   ├── azurerm_publicip/
+│   ├── azurerm_resource_group/
+│   ├── azurerm_virtual_machine/
+│   └── azurerm_virtual_network/
+├── Pipeline/
+│   ├── dev.yml
+│   ├── qa.yml
+│   ├── prod.yml
+│   └── multi-env.yml
 └── README.md
 ```
 
@@ -148,7 +154,7 @@ az login
 ### Navigate to Environment
 
 ```bash
-cd environments/dev
+cd Environment/dev
 ```
 
 ### Initialize Terraform
@@ -166,13 +172,13 @@ terraform validate
 ### Generate Execution Plan
 
 ```bash
-terraform plan -var-file="dev.tfvars"
+terraform plan
 ```
 
 ### Deploy Infrastructure
 
 ```bash
-terraform apply -var-file="dev.tfvars" -auto-approve
+terraform apply -auto-approve
 ```
 
 ---

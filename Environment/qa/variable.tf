@@ -5,6 +5,7 @@ variable "rgs" {
     managed_by = optional(string)
     tags       = optional(map(string), {})
   }))
+  default = {}
 }
 
 variable "vnet" {
@@ -43,6 +44,7 @@ variable "vnet" {
       })), [])
     })), [])
   }))
+  default = {}
 }
 
 variable "vms" {
@@ -70,6 +72,7 @@ variable "vms" {
       version   = string
     })
   }))
+  default = {}
 }
 
 variable "pip" {
@@ -78,6 +81,7 @@ variable "pip" {
     resource_group_name = string
     location            = string
   }))
+  default = {}
 }
 
 variable "bastion" {
@@ -90,6 +94,7 @@ variable "bastion" {
     snet_name           = string
     tags                = optional(map(string), {})
   }))
+  default = {}
 }
 
 variable "ilbs" {
@@ -114,6 +119,7 @@ variable "ilbs" {
     rule_port         = number
     backend_port      = number
   }))
+  default = {}
 }
 
 variable "niclb" {
@@ -123,8 +129,8 @@ variable "niclb" {
     resource_group_name   = string
     lb_name               = string
     pool_name             = string
-    })
-  )
+  }))
+  default = {}
 }
 
 variable "appgws" {
@@ -163,7 +169,6 @@ variable "appgws" {
     rule_type                 = string
     priority                  = number
   }))
-
   default = {}
 }
 
@@ -184,4 +189,17 @@ variable "databases" {
   default = {}
 }
 
-
+variable "nat_gateways" {
+  type = map(object({
+    name                    = string
+    location                = string
+    resource_group_name     = string
+    public_ip_name          = optional(string)
+    vnet_name               = optional(string)
+    subnet_name             = optional(string)
+    sku_name                = optional(string, "Standard")
+    idle_timeout_in_minutes = optional(number, 4)
+    tags                    = optional(map(string), {})
+  }))
+  default = {}
+}

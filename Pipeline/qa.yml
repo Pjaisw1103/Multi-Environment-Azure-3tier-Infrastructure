@@ -39,7 +39,7 @@ stages:
               command: "custom"
               workingDirectory: $(workingDirectory)
               outputTo: "console"
-              customCommand: "terraform fmt"
+              customCommand: "terraform fmt -check"
 
       - job: TfSecScan
         displayName: Tfsec Scan
@@ -100,3 +100,4 @@ stages:
               command: "apply"
               workingDirectory: $(workingDirectory)
               environmentServiceNameAzureRM: $(environmentServiceNameAzureRM)
+              commandOptions: "-auto-approve"

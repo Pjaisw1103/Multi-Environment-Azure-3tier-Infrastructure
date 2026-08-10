@@ -3,6 +3,6 @@ variable "rgs" {
     name       = string
     location   = string
     managed_by = optional(string)
-    tags       = optional(map(string),{})
+    tags       = optional(map(string), {})
   }))
 }

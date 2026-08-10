@@ -15,7 +15,6 @@ module "azurerm_virtual_machine" {
   vms        = var.vms
 }
 
-
 module "azurerm_public_ip" {
   depends_on = [module.azurerm_resource_group]
   source     = "../../Module/azurerm_publicip"
@@ -50,4 +49,10 @@ module "azurerm_database" {
   depends_on = [module.azurerm_resource_group]
   source     = "../../Module/azurerm_database"
   databases  = var.databases
+}
+
+module "azurerm_nat_gateway" {
+  depends_on   = [module.azurerm_resource_group, module.azurerm_virtual_network, module.azurerm_public_ip]
+  source       = "../../Module/azurerm_nat_gateway"
+  nat_gateways = var.nat_gateways
 }
