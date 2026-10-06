@@ -1,4 +1,4 @@
-# Multi-Environment Azure Infrastructure Setup
+# Multi-Environment Azure 3tier Infrastructure Setup
 
 An enterprise-grade, 3-tier Azure infrastructure provisioned using modular Terraform code and automated with Azure DevOps CI/CD pipelines across Development, QA/Staging, and Production environments.
 
