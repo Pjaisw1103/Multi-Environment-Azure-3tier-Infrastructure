@@ -12,20 +12,6 @@ parameters:
       - qa
       - prod
 
-variables:
-  ${{ if eq(parameters.environment, 'dev') }}:
-    workingDirectory: "$(System.DefaultWorkingDirectory)/Environment/dev"
-    backendServiceArm: "Priya(803ytf07-hgu89-4a01-9b2c-19663d855b6fb6)"
-    environmentServiceNameAzureRM: "Priya(803ytf07-hgu89-4a01-9b2c-19663d855b6fb6)"
-  ${{ if eq(parameters.environment, 'qa') }}:
-    workingDirectory: "$(System.DefaultWorkingDirectory)/Environment/qa"
-    backendServiceArm: "Priya(803ytf07-hgu89-4a01-9b2c-19663d855b6fb6)" # Update if QA uses different service connection
-    environmentServiceNameAzureRM: "Priya(803ytf07-hgu89-4a01-9b2c-19663d855b6fb6)" # Update if QA uses different service connection
-  ${{ if eq(parameters.environment, 'prod') }}:
-    workingDirectory: "$(System.DefaultWorkingDirectory)/Environment/prod"
-    backendServiceArm: "Priya(803ytf07-hgu89-4a01-9b2c-19663d855b6fb6)" # Update if Prod uses different service connection
-    environmentServiceNameAzureRM: "Priya(803ytf07-hgu89-4a01-9b2c-19663d855b6fb6)" # Update if Prod uses different service connection
-
 stages:
   - stage: StaticAnalysisCode
     displayName: "Pre-Commit & Static Analysis: ${{ parameters.environment }}"
