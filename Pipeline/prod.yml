@@ -6,11 +6,6 @@ trigger:
 
 pool: default
 
-variables:
-  workingDirectory: "$(System.DefaultWorkingDirectory)/Environment/prod"
-  backendServiceArm: "Priya(803ytf07-hgu89-4a01-9b2c-19663d855b6fb6)"
-  environmentServiceNameAzureRM: "Priya(803ytf07-hgu89-4a01-9b2c-19663d855b6fb6)"
-
 stages:
   - stage: StaticAnalysisCode
     displayName: Pre-Commit & Static Analysis Stage
